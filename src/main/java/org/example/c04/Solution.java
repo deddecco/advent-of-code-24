@@ -83,7 +83,7 @@ public class Solution {
                String filePath = args[0];
                Solution solution = new Solution();
                int result = solution.findXMAS(filePath);
-               System.out.println("Total occurrences of XMAS and SMAX: " + result);
+               System.out.println("Total occurrences of XMAS and SAMX: " + result);
           } catch (IOException e) {
                e.printStackTrace();
           }
