@@ -24,5 +24,9 @@ public class Rule {
      public void setSecond(int second) {
           this.second = second;
      }
+
+     public String toString() {
+          return "{first: " + this.first + "; second: " + this.second + "}";
+     }
 }
 
