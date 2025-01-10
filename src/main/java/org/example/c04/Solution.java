@@ -10,6 +10,7 @@ public class Solution {
 
      private static final String[] TARGETS = {"XMAS", "SAMX"};
 
+     // locate all instances of XMAS, forward or backwards, up or down, or on diagonals
      public int findXMAS(String filePath) throws IOException {
           List<String> lines = readAllLines(Paths.get(filePath));
           int numRows = lines.size();
@@ -18,6 +19,7 @@ public class Solution {
 
           int total = 0;
 
+          // the horizontal case
           for (int i = 0; i < numRows; i++) {
                for (int j = 0; j < numCols - 3; j++) {
                     String horizontal = "" + grid[i][j] + grid[i][j + 1] + grid[i][j + 2] + grid[i][j + 3];
@@ -31,6 +33,7 @@ public class Solution {
                }
           }
 
+          // the vertical case
           for (int i = 0; i < numRows - 3; i++) {
                for (int j = 0; j < numCols; j++) {
                     String vertical = "" + grid[i][j] + grid[i + 1][j] + grid[i + 2][j] + grid[i + 3][j];
@@ -43,6 +46,7 @@ public class Solution {
                }
           }
 
+          // diagonals
           for (int i = 0; i < numRows - 3; i++) {
                for (int j = 0; j < numCols - 3; j++) {
                     String diagonal = "" + grid[i][j] + grid[i + 1][j + 1] + grid[i + 2][j + 2] + grid[i + 3][j + 3];

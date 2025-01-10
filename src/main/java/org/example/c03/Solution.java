@@ -17,7 +17,9 @@ public class Solution {
 
      public static void main(String[] args) throws IOException {
           String filePath = args[0];
-          List<int[]> multiplicationPairs = extractToListOfArrays(filePath);
+
+          Solution solution = new Solution();
+          List<int[]> multiplicationPairs = solution.extractToListOfArrays(filePath);
 
           // add the product of the good pairs to the sum
           for (int[] pair : multiplicationPairs) {
@@ -27,12 +29,14 @@ public class Solution {
           System.out.println("Final runningSum = " + runningSum);
      }
 
+     // keep the running sum updated
      private static void addToRunningSum(int[] pair) {
           int intermediateResult = pair[0] * pair[1];
           runningSum += intermediateResult;
      }
 
-     public static List<int[]> extractToListOfArrays(String filePath) throws IOException {
+     // come up with a list of arrays of numbers to be multiplied together
+     public List<int[]> extractToListOfArrays(String filePath) throws IOException {
           List<int[]> result = new ArrayList<>();
           String regex = "(mul\\((\\d+),\\s*(\\d+)\\)|do\\(\\)|don't\\(\\))";
           Pattern pattern = Pattern.compile(regex);

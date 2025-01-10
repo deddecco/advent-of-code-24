@@ -35,6 +35,7 @@ public class Solution {
           }
           return ruleList;
      }
+
      /**
       * read through the file and create a list of update lists
       */
@@ -53,6 +54,7 @@ public class Solution {
           }
           return updateList;
      }
+
      /**
       * check if an update follows the rules in the rule list
       */
@@ -108,7 +110,7 @@ public class Solution {
      /**
       * go through the list of good middle numbers and add them
       */
-     public static int solve(List<List<Integer>> badUpdates, List<Rule> ruleList) {
+     public int solve(List<List<Integer>> badUpdates, List<Rule> ruleList) {
           int result = 0;
 
           for (List<Integer> update : badUpdates) {
@@ -126,11 +128,11 @@ public class Solution {
      /**
       * cycle detection by dfs search; true = cycle found, false = no cycle
       */
-     public static boolean dfs(int pageNumber,
-                               Map<Integer, List<Integer>> graph,
-                               Set<Integer> visited,
-                               Set<Integer> recursionStack,
-                               List<Integer> result) {
+     public boolean dfs(int pageNumber,
+                        Map<Integer, List<Integer>> graph,
+                        Set<Integer> visited,
+                        Set<Integer> recursionStack,
+                        List<Integer> result) {
           boolean res = false;
           boolean finished = false;
           // recursion stack keeps track of path, so if path already contains a given page, and we want to go there again, that's a cycle
@@ -168,7 +170,7 @@ public class Solution {
       * for part 2, the rules stipulate that "For each of the incorrectly-ordered updates,
       * use the page ordering rules to put the page numbers in the right order.
       */
-     public static List<Integer> reorderUpdate(List<Integer> update, List<Rule> ruleList) {
+     public List<Integer> reorderUpdate(List<Integer> update, List<Rule> ruleList) {
           Map<Integer, List<Integer>> graph = new HashMap<>();
 
           // put each page in the map
@@ -227,7 +229,8 @@ public class Solution {
           }
 
           // Solve for the bad updates
-          int result = solve(badUpdates, ruleList);
+          Solution solution = new Solution();
+          int result = solution.solve(badUpdates, ruleList);
 
           // Output the result
           System.out.println("Final result: " + result);

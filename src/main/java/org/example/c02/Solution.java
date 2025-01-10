@@ -11,6 +11,8 @@ public class Solution {
 
      private int countSafe = 0;
 
+
+     // preprocess the file
      private int[][] transformFile(String fileName) throws IOException {
           BufferedReader reader = new BufferedReader(new FileReader(fileName));
 
@@ -73,6 +75,7 @@ public class Solution {
           return "Unsafe regardless of which level is removed.";
      }
 
+     // determine if a level is safe according to the parameters of fthe pizzle
      private boolean isLevelSafe(int[] level) {
           for (int i = 1; i < level.length; i++) {
                int diff = level[i] - level[i - 1];
@@ -83,6 +86,7 @@ public class Solution {
           return true;
      }
 
+     // look through the file for safe levels
      public int readThroughFile(int[][] file) {
           for (int[] ints : file) {
                String result = levelIsSafe(ints);

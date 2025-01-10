@@ -16,25 +16,32 @@ public class Solution {
 
           String fileName = args[0];
           try {
-               long goodResults = findGoodLines(fileName);
+               Solution solution = new Solution();
+               long goodResults = solution.findGoodLines(fileName);
                System.out.println("Total of good results: " + goodResults);
           } catch (IOException e) {
                System.err.println("Error reading file: " + e.getMessage());
           }
      }
 
-     public static long findGoodLines(String fileName) throws IOException {
+     // a line is good if the number before the colon can be made from any combination of + and * applied
+     // to the numbers in the rest of the line IN THE ORDER THEY APPEAR IN THE LINE
+     public long findGoodLines(String fileName) throws IOException {
           List<String> fileContent = readFile(fileName);
           long goodResults = 0;
 
           for (String line : fileContent) {
                line = line.trim();
+               // skip over blanks
                if (line.isEmpty()) {
                     continue;
                }
 
+               // find the result and the operands
                String[] parts = line.split(":");
                long result;
+               // make an operand list
+               // numbers can get very big, so use longs, not ints
                List<Long> operands = new ArrayList<>();
 
                try {
@@ -48,10 +55,14 @@ public class Solution {
                     continue;
                }
 
+               // if you can match it, like 190: 10 9 10 10, as in 190 = 10 * 9 + 10 * 10 => 190 is 90 + 100
+               // then the result is "good"
                if (doesMatch(result, operands)) {
                     goodResults += result;
                }
           }
+
+          // the answer is the sum of all the good results
           return goodResults;
      }
 
@@ -60,6 +71,7 @@ public class Solution {
      }
 
      private static boolean evaluateExpression(List<Long> operands, int index, long result) {
+          // does the final result on the right match the target on the left?
           if (index == operands.size() - 1) {
                return operands.get(index) == result;
           }
@@ -67,23 +79,29 @@ public class Solution {
           long currentValue = operands.get(index);
           long nextValue = operands.get(index + 1);
 
+          // see if multiplying the current pair is correct
           if (tryMult(operands, index, result, currentValue, nextValue)) {
                return true;
           }
+          // see if adding the current pair is correct
           if (tryAdd(operands, index, result, currentValue, nextValue)) {
                return true;
           }
 
+          // move to the next adjacent pair
           operands.set(index + 1, nextValue);
 
+          // if adding didn't work, and multiplying didn't work, then there is no answer for the given right hand side
           return false;
      }
 
+     // see if adding works
      private static boolean tryAdd(List<Long> operands, int index, long result, long currentValue, long nextValue) {
           operands.set(index + 1, currentValue * nextValue);
           return evaluateExpression(operands, index + 1, result);
      }
 
+     // see if multiplying works
      private static boolean tryMult(List<Long> operands, int index, long result, long currentValue, long nextValue) {
           operands.set(index + 1, currentValue + nextValue);
           return evaluateExpression(operands, index + 1, result);
